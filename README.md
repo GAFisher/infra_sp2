@@ -53,5 +53,69 @@ docker-compose exec web python manage.py dumpdata > fixtures.json
 ```
 6. Проект будет доступен по адресу `http://localhost/`.
 
+### Регистрация новых пользователей
+1. Пользователь отправляет POST-запрос с параметрами `email` и `username` на эндпоинт `/api/v1/auth/signup/`.
+```
+{
+"email": "newuser@example.com",
+"username": "newuser"
+}
+```
+2. Сервис **YaMDB** отправляет письмо с кодом подтверждения (`confirmation_code`) на указанный адрес `email`.
+3. Пользователь отправляет POST-запрос с параметрами `username` и `confirmation_code` на эндпоинт `/api/v1/auth/token/`, в ответе на запрос ему приходит `token` (JWT-токен).
+```
+{
+"username": "newuser",
+"confirmation_code": "bm19kk-19c5fbeb4f340e882e7c7c624ce4f2ce"
+}
+```
+Пример ответа:
+```
+{
+    "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4MjIyMDYzLCJpYXQiOjE2ODA0NDYwNjMsImp0aSI6IjQ4MTdlNjUwYjNiMjRkY2JhNmRhMjBiODE3OGEzMGQzIiwidXNlcl9pZCI6Nn0.ntkEoWCxmK_oj6zoOJxj2sCkPlQJ0BTdaZOTHN9vjJk"
+}
+```
+### Примеры запросов
+#### Получение информации о произведении
+Отправьте GET-запрос на эндпоинт `/api/v1/titles/1/`.
+Пример ответа:
+```
+{
+    "id": 1,
+    "name": "Побег из Шоушенка",
+    "year": 1994,
+    "rating": 10,
+    "description": null,
+    "genre": [
+        {
+            "name": "Драма",
+            "slug": "drama"
+        }
+    ],
+    "category": {
+        "name": "Фильм",
+        "slug": "movie"
+    }
+}
+```
+#### Добавление нового отзыва 
+Отправьте POST-запрос на эндпоинт `/api/v1/titles/1/reviews/`, передав текст отзыва в поле `text` и оценку в поле `score`. 
+```
+{
+"text": "Ставлю десять звёзд!",
+"score": 10
+}
+```
+Пример ответа:
+```
+{
+    "id": 11,
+    "text": "Ставлю десять звёзд!",
+    "author": "newuser",
+    "score": 10,
+    "pub_date": "2023-04-02T15:51:58.834794Z"
+}
+```
+
 ### Автор
 Галина Фишер, студент когорты 18+ Яндекс.Практикум
