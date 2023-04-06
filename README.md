@@ -15,17 +15,15 @@ source env/bin/activate
 python3 -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
-3. Создайте файл _.env_ с переменными окружения внутри директории infra (на одном уровне с docker-compose.yaml).
-
-    Шаблон наполнения env-файла:
+3. Создайте файл _.env_ с переменными окружения внутри директории infra (на одном уровне с docker-compose.yaml) со следующим содержимым:
 ```
-SECRET_KEY = 'p&l%385148kslhtyn^##a1)ilz@4zqj=rq&agdol^##zgl9(vs'
-DB_ENGINE=django.db.backends.postgresql
-DB_NAME=postgres
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-DB_HOST=db
-DB_PORT=5432
+SECRET_KEY=<Cекретный ключ из файла settings.py>
+DB_ENGINE=<Указываем, что работаем с postgresql>
+DB_NAME=<Имя базы данных>
+POSTGRES_USER=<Логин для подключения к базе данных>
+POSTGRES_PASSWORD=<Пароль для подключения к БД>
+DB_HOST=<Название сервиса (контейнера)>
+DB_PORT=<Порт для подключения к БД>
 ```
 4. Запустите docker-compose командой `docker-compose up -d --build`.
 
