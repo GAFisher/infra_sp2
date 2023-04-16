@@ -7,8 +7,8 @@
 ### Как запустить проект
 1. Создайте и активируйте виртуальное окружение
 ```
-python3 -m venv env
-source env/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 ```
 2. Установите зависимости из файла requirements.txt
 ```
